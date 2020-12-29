@@ -12,9 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String username;
+    private String userName;
     private String password;
     private String roles;
-    private String active;
+    private boolean active;
 
 }

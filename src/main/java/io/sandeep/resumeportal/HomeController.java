@@ -15,5 +15,11 @@ public class HomeController {
         return "Welcome to HomePage";
     }
 
+    @GetMapping("/edit")
+    public String edit(){
+        User u = new User();
+        return "Edit Page";
+    }
+
 
 }
