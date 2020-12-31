@@ -25,15 +25,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-        UserProfile up1 = new UserProfile();
-        up1.setId(1);
-        up1.setUserName("sandy");
-        up1.setDesignation("Java Developer");
-        up1.setEmail("sandeep.bachala142@gmail.com");
-        up1.setFirstName("Sandeep Kumar");
-        up1.setLastName("Bachala");
-        up1.setPhone("9848022338");
-        up1.setTheme(1);
+        Optional<UserProfile> upOptional= userProfileRepository.findByUserName("sandy");
+        upOptional.orElseThrow(()-> new RuntimeException("Not found : "));
+        UserProfile up1 = upOptional.get();
 
         Job job1 = new Job(1,"TCS","Java Developer",
                 LocalDate.of(2011,11,12),
@@ -41,10 +35,9 @@ public class HomeController {
         Job job2 = new Job(2,"Anthem","Senior Java Developer",
                 LocalDate.of(2015,1,11),
                 LocalDate.of(2020,9,11));
-        List<Job> jobs = new ArrayList<>();
-        jobs.add(job1);
-        jobs.add(job2);
-        up1.setJobs(jobs);
+        up1.getJobs().clear();
+        up1.getJobs().add(job1);
+        up1.getJobs().add(job2);
         userProfileRepository.save(up1);
         return "profile";
     }
