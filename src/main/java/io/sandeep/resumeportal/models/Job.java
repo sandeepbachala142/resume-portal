@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +23,9 @@ public class Job {
     private String city;
     private String state;
     private boolean currentJob;
+
     @ElementCollection(targetClass=String.class)
-    private List<String> responsibilities;
+    private List<String> responsibilities = new ArrayList<>();
 
     public Job() {
     }
