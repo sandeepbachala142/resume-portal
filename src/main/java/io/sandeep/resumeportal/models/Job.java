@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Table
@@ -17,18 +19,26 @@ public class Job {
     private String designation;
     private LocalDate startDate;
     private  LocalDate endDate;
+    private String city;
+    private String state;
+    private boolean currentJob;
+    @ElementCollection(targetClass=String.class)
+    private List<String> responsibilities;
 
+    public Job() {
+    }
 
-    public Job(int id, String company, String designation, LocalDate startDate, LocalDate endDate) {
+    public Job(int id, String company, String designation, LocalDate startDate, LocalDate endDate, String city, String state) {
         this.id = id;
         this.company = company;
         this.designation = designation;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.city = city;
+        this.state = state;
     }
 
-    public Job() {
-    }
+
 
     @Override
     public String toString() {
@@ -38,6 +48,15 @@ public class Job {
                 ", designation='" + designation + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
                 '}';
+    }
+
+    public String getFormattedStartDate(){
+        return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+    public String getFormattedEndDate(){
+        return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
     }
 }

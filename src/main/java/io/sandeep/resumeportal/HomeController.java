@@ -31,10 +31,11 @@ public class HomeController {
 
         Job job1 = new Job(1,"TCS","Java Developer",
                 LocalDate.of(2011,11,12),
-                LocalDate.of(2014,11,12));
-        Job job2 = new Job(2,"Anthem","Senior Java Developer",
+                LocalDate.of(2014,11,12),"Bangalore","India");
+        Job job2 = new Job(2,"Verizon","Senior Java Developer",
                 LocalDate.of(2015,1,11),
-                LocalDate.of(2020,9,11));
+                LocalDate.of(2020,9,11),"Irving","TX");
+        job2.setCurrentJob(true);
         up1.getJobs().clear();
         up1.getJobs().add(job1);
         up1.getJobs().add(job2);
