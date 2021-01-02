@@ -21,6 +21,7 @@ public class UserProfile {
     private String email;
     private String phone;
     private String designation;
+    private String summary;
 
     @ElementCollection(targetClass=String.class)
     private List<String> skills= new ArrayList<>();
@@ -33,7 +34,7 @@ public class UserProfile {
     @JoinColumn(name = "job_id")
     List<Job> jobs = new ArrayList<>();
 
-    private String summary;
+
 
     public String getSkillsList(){
         String skillsList="";

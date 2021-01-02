@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -101,9 +98,14 @@ public class HomeController {
     }
 
     @PostMapping("/edit")
-    public String postEdit(Principal principal, Model model){
-
-        String userId = principal.getName();
+    public String postEdit(Principal principal, Model model, @ModelAttribute UserProfile userProfile){
+        String userId=principal.getName();
+        Optional<UserProfile> upOptional= userProfileRepository.findByUserName(userId);
+        upOptional.orElseThrow(()-> new RuntimeException("Not found : "));
+        UserProfile up = upOptional.get();
+        userProfile.setId(up.getId());
+        userProfile.setUserName(up.getUserName());
+        userProfileRepository.save(userProfile);
         model.addAttribute("userId",principal.getName());
         return "redirect:/view/"+userId;
     }
