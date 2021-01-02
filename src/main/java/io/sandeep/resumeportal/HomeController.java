@@ -23,8 +23,8 @@ public class HomeController {
     @Autowired
     UserProfileRepository userProfileRepository;
 
-    @GetMapping("/")
-    public String home(){
+    @GetMapping("/sampledata")
+    public String home(Principal principal,Model model){
         Optional<UserProfile> upOptional= userProfileRepository.findByUserName("sandy");
         upOptional.orElseThrow(()-> new RuntimeException("Not found : "));
         UserProfile up1 = upOptional.get();
@@ -80,9 +80,18 @@ public class HomeController {
         up1.getSkills().add("REST");
 
         userProfileRepository.save(up1);
-        return "profile";
+        if(principal!=null)
+            model.addAttribute("loggedin",principal.getName());
+        return "index";
     }
 
+    @GetMapping("/")
+    public String homePage(Principal principal,Model model){
+        if(principal!=null)
+            model.addAttribute("loggedin",principal.getName());
+
+        return "index";
+    }
     @GetMapping("/edit")
     public String edit(Principal principal, Model model,@RequestParam(required = false) String add){
          /*Pricipal is the object which is provided by spring security
@@ -147,7 +156,7 @@ public class HomeController {
         model.addAttribute("userId",userId.toUpperCase());
         model.addAttribute("userProfile",userProfile);
         System.out.println(userProfile.getJobs().toString());
-        return "profile-templates/"+userProfile.getTheme()+"/index";  // This will return the profile template as view because its MVC controller. It wont be a json.  So it will retrun profile.html
+        return "profile-templates/"+userProfile.getTheme()+"/index";  // This will return the profile template as view because its MVC controller. It wont be a json.  So it will retrun index.html
     }
 
 

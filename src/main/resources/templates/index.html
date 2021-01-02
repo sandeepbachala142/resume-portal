@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Profile</title>
+</head>
+<body>
+    <!--<h1 th:text="${userId} + '\'s Profile'"> </h1>-->
+    <h1>Resume Portal</h1>
+    <a href="/edit"> Click here to create resume</a> <br>
+    <a href="/sampledata"> Click here to create sample data</a><br>
+    <span th:if="${loggedin}">
+        <a th:href="@{'/view/'+${loggedin}}" > Click here to view profile </a><br>
+        <a href="/logout"> Click here to Logout</a><br>
+    </span>
+    <span th:unless="${loggedin}">
+         <a href="/login">Click here to Login</a>
+    </span>
+</body>
+</html>
