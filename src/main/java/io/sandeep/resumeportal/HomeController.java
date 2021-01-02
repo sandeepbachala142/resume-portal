@@ -84,7 +84,7 @@ public class HomeController {
     }
 
     @GetMapping("/edit")
-    public String edit(Principal principal, Model model){
+    public String edit(Principal principal, Model model,@RequestParam(required = false) String add){
          /*Pricipal is the object which is provided by spring security
         that gives the information of logged in USER.
         */
@@ -92,6 +92,14 @@ public class HomeController {
         Optional<UserProfile> upOptional= userProfileRepository.findByUserName(userId);
         upOptional.orElseThrow(()-> new RuntimeException("Not found : "));
         UserProfile up = upOptional.get();
+        if("job".equalsIgnoreCase(add)){
+            up.getJobs().add(new Job());
+        }else if("education".equalsIgnoreCase(add)){
+            up.getEducationList().add(new Education());
+        }else if("skill".equalsIgnoreCase(add)){
+            up.getSkills().add(new String());
+        }
+
         model.addAttribute("userId",userId);
         model.addAttribute("userProfile",up);
         return "profile-edit";
