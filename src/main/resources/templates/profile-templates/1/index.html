@@ -20,7 +20,7 @@
         p { margin: 0 0 16px 0; }
         a { color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
         a:hover { border-bottom-style: solid; color: black; }
-        ul { margin: 0 0 20px 17px; }
+        ul { margin: 0 0 5px 17px; }
         #objective { width: 500px; float: left; }
         #objective p { font-family: Georgia, Serif; font-style: italic; color: #666; }
         dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
@@ -63,21 +63,18 @@
             <dd class="clear"></dd>
             
             <dt>Education</dt>
-            <dd>
-                <h2>Withering Madness University - Planet Vhoorl</h2>
-                <p><strong>Major:</strong> Public Relations<br />
-                   <strong>Minor:</strong> Scale Tending</p>
+            <dd th:each="education : ${userProfile.educationList}">
+                <h2 th:text="${education.institution}">Withering Madness University - Planet Vhoorl</h2>
+                <p><strong>Major:</strong> <span th:text="${education.specialization}">Public Relations</span><br />
+                    <strong>Year:</strong> <span th:text="${education.formattedStartDate}">0</span> - <span th:text="${education.formattedEndDate}">1</span></p>
             </dd>
             
             <dd class="clear"></dd>
             
             <dt>Skills</dt>
             <dd>
-                <h2>Office skills</h2>
-                <p>Office and records management, database administration, event organization, customer support, travel coordination</p>
-                
-                <h2>Computer skills</h2>
-                <p>Microsoft productivity software (Word, Excel, etc), Adobe Creative Suite, Windows</p>
+                <!--<p th:each="skill : ${userProfile.skills}"><span th:text="${skill}">Office and records management, database administration</span> </p>-->
+                <p><span th:text="${userProfile.skillsList}">Office and records management, database administration</span> </p>
             </dd>
             
             <dd class="clear"></dd>
@@ -97,6 +94,7 @@
                 <ul th:each="responsibility : ${job.responsibilities}">
                     <li th:text="${responsibility}">Provided untimely deaths to all who opposed</li>
                 </ul>
+                <br>
             </dd>
             
             <dd class="clear"></dd>

@@ -1,5 +1,6 @@
 package io.sandeep.resumeportal;
 
+import io.sandeep.resumeportal.models.Education;
 import io.sandeep.resumeportal.models.Job;
 import io.sandeep.resumeportal.models.User;
 import io.sandeep.resumeportal.models.UserProfile;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +56,57 @@ public class HomeController {
         up1.getJobs().clear();
         up1.getJobs().add(job1);
         up1.getJobs().add(job2);
+
+        // int id, String institution, String specialization, String cgpa, LocalDate startDate, LocalDate endDate
+        Education ed1 = new Education(1,"Gandhi Institute of Technology and Management, India",
+                "Bachelor of Technology in Electronics and Communications Engineering","8",
+                LocalDate.of(2007,4,11),
+                LocalDate.of(2011,3,11));
+
+        Education ed2 = new Education(2,"Wilmington University, Delaware, USA",
+                "Masters in Information Assurance","8",
+                LocalDate.of(2016,1,11),
+                LocalDate.of(2017,10,11));
+
+        up1.getEducationList().clear();
+        up1.getEducationList().add(ed1);
+        up1.getEducationList().add(ed2);
+
+        up1.getSkills().clear();
+        up1.getSkills().add("Java");
+        up1.getSkills().add("Spring framework");
+        up1.getSkills().add("Microservices");
+        up1.getSkills().add("J2EE");
+        up1.getSkills().add("Hibernate");
+        up1.getSkills().add("Webservices");
+        up1.getSkills().add("REST");
+
         userProfileRepository.save(up1);
         return "profile";
     }
 
     @GetMapping("/edit")
-    public String edit(){
-        return "profile";
+    public String edit(Principal principal, Model model){
+         /*Pricipal is the object which is provided by spring security
+        that gives the information of logged in USER.
+        */
+        String userId=principal.getName();
+        Optional<UserProfile> upOptional= userProfileRepository.findByUserName(userId);
+        upOptional.orElseThrow(()-> new RuntimeException("Not found : "));
+        UserProfile up = upOptional.get();
+        model.addAttribute("userId",userId);
+        model.addAttribute("userProfile",up);
+        return "profile-edit";
     }
+
+    @PostMapping("/edit")
+    public String postEdit(Principal principal, Model model){
+        String userId = principal.getName();
+        model.addAttribute("userId",principal.getName());
+        return "redirect:/view/"+userId;
+    }
+
+
 
     @GetMapping("/view/{userId}")
     public String view(@PathVariable String userId, Model model){ // Model is the pojo which returns to view component when we return from this service.

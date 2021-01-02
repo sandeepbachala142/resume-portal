@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h1 th:text="${userId} + '\'s Profile'"> </h1>
+
+ <!--
+    ${...} : Variable expressions. These are OGNL expressions (or Spring EL if you have spring integrated)
+
+    *{...} : Selection expressions. Same as above, excepted it will be executed on a previously selected object only
+
+    #{...} : Message (i18n) expressions. Used to retrieve locale-specific messages from external sources
+
+    @{...} : Link (URL) expressions. Used to build URLs
+    ~{...} : Fragment expressions. Represent fragments of markup and move them around templates
+  -->
+
+    <form action="#" th:action="@{/edit}" th:object="${userProfile}" method="post">  <!--This is going to do post request to /edit url... th:object is like 2 way data binding-->
+        <div class="container">
+        <div class="form-label">
+            <label >First Name</label>
+            <input th:field="*{firstName}" class="form-control">
+
+        </div>
+        <div class="form-label">
+            <label>Last Name</label>
+            <input th:field="*{lastName}"  class="form-control">
+
+        </div>
+        <div class="form-label">
+            <label>Email address</label>
+            <input  th:field="*{email}"  class="form-control">
+
+        </div>
+        <div class="form-label">
+            <label>Phone Number</label>
+            <input  th:field="*{phone}"  class="form-control">
+
+        </div>
+        <div class="form-label">
+            <label>Designation</label>
+            <input  th:field="*{designation}"  class="form-control">
+
+        </div>
+        </div>
+
+    </form>
+</body>
+</html>
