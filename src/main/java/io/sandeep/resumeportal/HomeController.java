@@ -119,9 +119,28 @@ public class HomeController {
     }
 
 
+    @GetMapping("/delete")
+    public String delete(Principal principal, Model model, @RequestParam String type, @RequestParam int index){
+        String userId = principal.getName();
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userId));
+        UserProfile userProfile = userProfileOptional.get();
+        if ("job".equals(type)) {
+            userProfile.getJobs().remove(index);
+        } else if ("education".equals(type)) {
+            userProfile.getEducationList().remove(index);
+        } else if ("skill".equals(type)) {
+            userProfile.getSkills().remove(index);
+        }
+        userProfileRepository.save(userProfile);
+        return "redirect:/edit";
+    }
 
     @GetMapping("/view/{userId}")
-    public String view(@PathVariable String userId, Model model){ // Model is the pojo which returns to view component when we return from this service.
+    public String view(Principal principal,@PathVariable String userId, Model model){ // Model is the pojo which returns to view component when we return from this service.
+        if(principal!=null && userId.equalsIgnoreCase(principal.getName())){
+            model.addAttribute("owner","true");
+        }
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
         userProfileOptional.orElseThrow(()-> new RuntimeException("Not found : " + userId));
         UserProfile userProfile = userProfileOptional.get();

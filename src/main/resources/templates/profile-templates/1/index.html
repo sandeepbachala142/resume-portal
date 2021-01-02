@@ -39,7 +39,10 @@
         
             <!-- Microformats! -->
         
-            <h1 class="fn"><span th:text="${userProfile.firstName}"></span> <span th:text="${userProfile.lastName}"></span></h1>
+            <h1 class="fn"><span th:text="${userProfile.firstName}"></span>
+                <span th:text="${userProfile.lastName}"></span></h1> <span><a th:if="${owner == 'true'}" href="/edit">edit</a></span>
+
+
             <h2 class="fn" th:text="${userProfile.designation}">555-666-7777</h2><br />
             <p>
                 Cell: <span class="tel" th:text="${userProfile.phone}">555-666-7777</span><br />
