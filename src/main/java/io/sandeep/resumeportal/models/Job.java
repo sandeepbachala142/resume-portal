@@ -1,6 +1,7 @@
 package io.sandeep.resumeportal.models;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +19,9 @@ public class Job {
     private int id;
     private String company;
     private String designation;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private  LocalDate endDate;
     private String city;
     private String state;
@@ -30,7 +33,7 @@ public class Job {
     public Job() {
     }
 
-    public Job(int id, String company, String designation, LocalDate startDate, LocalDate endDate, String city, String state) {
+    public Job(int id, String company, String designation, LocalDate startDate, String city, String state) {
         this.id = id;
         this.company = company;
         this.designation = designation;

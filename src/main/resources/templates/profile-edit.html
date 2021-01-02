@@ -4,6 +4,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Profile</title>
+    <style type="text/css">
+
+        -webkit-appearance: none;
+
+     </style>
 </head>
 <body>
     <h1 th:text="${userId} + '\'s Profile'"> </h1>
@@ -24,7 +29,6 @@
         <div class="form-label">
             <label >First Name</label>
             <input th:field="*{firstName}" class="form-control">
-
         </div>
         <div class="form-label">
             <label>Last Name</label>
@@ -46,8 +50,59 @@
             <input  th:field="*{designation}"  class="form-control">
 
         </div>
+        <br>
+         <h3>Jobs:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Designation</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>Current Job?</th>
+                </tr>
+                </thead>
+                <tr th:each ="job,stat : *{jobs}">  <!--stat is like a counter... like the for loop-->
+                    <td><input  class="form-control" th:field="*{jobs[__${stat.index}__].company}"> </td><!--This is like we are getting from userprofile object directly and from jobs array-->
+                    <td><input  class="form-control" th:field="*{jobs[__${stat.index}__].designation}"> </td>
+                    <td><input  class="form-control" th:field="*{jobs[__${stat.index}__].city}"> </td>
+                    <td><input  class="form-control" th:field="*{jobs[__${stat.index}__].state}"> </td>
+                    <td><input type="date"  class="form-control" th:field="*{jobs[__${stat.index}__].startDate}"> </td>
+                    <td><input type="date" class="form-control" th:field="*{jobs[__${stat.index}__].endDate}"> </td>
+                    <td><input type="checkbox" th:field="*{jobs[__${stat.index}__].currentJob}"> </td>
+                </tr>
+            </table>
+            <br>
+            <h2>Education</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Institution</th>
+                    <th>Specialization</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>CGPA</th>
+                </tr>
+                </thead>
+                <tr th:each ="education,stat : *{educationList}">  <!--stat is like a counter... like the for loop-->
+                    <td><input  class="form-control" th:field="*{educationList[__${stat.index}__].institution}"> </td><!--This is like we are getting from userprofile object directly and from jobs array-->
+                    <td><input  class="form-control" th:field="*{educationList[__${stat.index}__].specialization}"> </td>
+                    <td><input type="date"  class="form-control" th:field="*{educationList[__${stat.index}__].startDate}"> </td>
+                    <td><input type="date" class="form-control" th:field="*{educationList[__${stat.index}__].endDate}"> </td>
+                    <td><input  class="form-control" th:field="*{educationList[__${stat.index}__].cgpa}"> </td>
+                </tr>
+            </table>
+            <br>
+            <h2>Skills</h2>
+            <table>
+                <tr th:each ="skill,stat : *{skills}">  <!--stat is like a counter... like the for loop-->
+                    <td><input  class="form-control" th:field="*{skills[__${stat.index}__]}"> </td><!--This is like we are getting from userprofile object directly and from jobs array-->
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
     </form>
 </body>
 </html>

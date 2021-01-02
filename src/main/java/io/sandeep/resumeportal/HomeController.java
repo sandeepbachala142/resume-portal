@@ -33,8 +33,9 @@ public class HomeController {
         UserProfile up1 = upOptional.get();
 
         Job job1 = new Job(1,"TCS","Java Developer",
-                LocalDate.of(2011,11,12),
-                LocalDate.of(2014,11,12),"Bangalore","India");
+                LocalDate.of(2011,11,12)
+                ,"Bangalore","India");
+        job1.setEndDate(LocalDate.of(2014,11,12));
         job1.getResponsibilities().add("Involved in SDLC Requirements gathering, Analysis, Design, Development and Testing of application using AGILE methodology");
         job1.getResponsibilities().add("Involved in development of both middle layer and front end development with IBM Portlets.");
         job1.getResponsibilities().add("Implementing Disaster Recover activity whenever it’s required.");
@@ -44,7 +45,7 @@ public class HomeController {
 
         Job job2 = new Job(2,"Verizon","Senior Java Developer",
                 LocalDate.of(2015,1,11),
-                LocalDate.of(2020,9,11),"Irving","TX");
+                "Irving","TX");
         job2.getResponsibilities().add("Requirement gathering, analysis, and designing solutions for enterprise-level web applications and RESTful APIs as per the business requirements.");
         job2.getResponsibilities().add("Develop robust, scalable, REST Web services, and MicroServices using Java 8, Spring Boot, Spring Cloud, Redis, Hibernate, API Gateway, etc.");
         job2.getResponsibilities().add("Worked on APIGEE to create API proxies for the backend web services in multiple microservices.");
@@ -101,6 +102,7 @@ public class HomeController {
 
     @PostMapping("/edit")
     public String postEdit(Principal principal, Model model){
+
         String userId = principal.getName();
         model.addAttribute("userId",principal.getName());
         return "redirect:/view/"+userId;
