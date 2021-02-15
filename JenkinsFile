@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Fetching code from') {
             steps {
-                 git credentialsId: 'MyGitHub', url: 'https://github.com/sandeepbachala142/resume-portal'
+                 build 'ResumeBuilder'
             }
         }
         stage('Building') {
